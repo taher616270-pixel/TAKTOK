@@ -1,0 +1,13 @@
+{
+  "name": "TAKTOK - تاك توك",
+  "short_name": "TAKTOK",
+  "description": "تاك توك - تطبيق فيديو مثل تيك توك",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {"src": "https://cdn-icons-png.flaticon.com/512/3046/3046120.png","sizes": "512x512","type": "image/png"}
+  ]
+}
