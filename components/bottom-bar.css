@@ -1,0 +1,22 @@
+.taktok-bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:68px;
+  background:#000;border-top:1px solid #1a1a1a;
+  display:flex;justify-content:space-around;align-items:center;
+  z-index:9999;
+}
+.taktok-bottom-nav .nav-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  color:#8a8a8a;font-size:10px;gap:3px;background:none;border:none;
+}
+.taktok-bottom-nav .nav-item.active{color:#fff}
+.taktok-bottom-nav .nav-item svg{width:26px;height:26px}
+.taktok-bottom-nav .nav-item.center .plus-btn{
+  width:46px;height:32px;background:#fff;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:-3px 0 0 #ff3b5c,3px 0 0 #25f4ee;
+}
+.taktok-bottom-nav .nav-item.center .plus-btn::before{content:'+';font-size:22px;font-weight:700;color:#000}
+.taktok-bottom-nav .badge{
+  position:absolute;top:-2px;right:18px;background:#ff3b5c;color:#fff;
+  font-size:9px;padding:1px 5px;border-radius:10px;
+}
