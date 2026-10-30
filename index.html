@@ -1,15 +1,42 @@
 <!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#000"><meta name="description" content="TAKTOK — منصة الفيديوهات القصيرة"><link rel="manifest" href="./manifest.json"><link rel="stylesheet" href="./app.css"><title>TAKTOK</title></head>
-<body><main class="app">
-<header class="topbar"><button class="top-live" id="liveBtn">LIVE</button><div class="feed-tabs" id="feedTabs"><button data-tab="following">أتابعه</button><button class="active" data-tab="foryou">لك</button></div><button class="top-search" id="navSearch" aria-label="بحث">⌕</button></header>
-<div class="feed" id="feed"></div>
-<nav class="bottom-nav"><button class="nav-btn active" id="navHome"><span>⌂</span>الرئيسية</button><button class="nav-btn" id="navFriends"><span>♧</span>الأصدقاء</button><button class="nav-btn create-btn" id="navCreate"><span>＋</span></button><button class="nav-btn" id="navInbox"><span>✉</span>الوارد</button><button class="nav-btn" id="navProfile"><span>♙</span>حسابي</button></nav>
-<input id="upload" type="file" accept="video/*" hidden><div id="toast" class="toast"></div>
-<section class="panel" id="friends"><header><b>الأصدقاء</b><button data-close>✕</button></header><div class="friend-intro">لحظات وأخبار أصدقائك في مكان واحد</div><div class="friend-tabs"><button class="active" data-friend-tab="all">الكل</button><button data-friend-tab="videos">فيديوهات</button><button data-friend-tab="photos">صور</button></div><div id="friendsFeed" class="friends-feed"></div></section>
-<section class="panel" id="search"><header><b>اكتشف</b><button data-close>✕</button></header><input id="searchInput" placeholder="ابحث عن حساب أو فيديو أو وسم"><div id="searchResults"><p class="muted">ابحث عن حساب أو وصف فيديو</p></div></section>
-<section class="panel" id="inbox"><header><b>الوارد</b><button data-close>✕</button></header><div class="empty-panel">ستظهر هنا الرسائل والإشعارات عند ربط نظام الحسابات والخادم.</div></section>
-<section class="panel" id="profile"><header><b>الملف الشخصي</b><button data-close>✕</button></header><div class="profile-head"><img src="https://i.pravatar.cc/150?u=taktok"><div><b id="username">@taherkld</b><button id="editProfile">تعديل الملف</button></div></div><div class="stats"><div><b id="statFollowing">0</b>يتابع</div><div><b id="statLikes">0</b>الإعجابات</div><div><b id="statVideos">0</b>فيديو</div></div><div class="empty-panel">فيديوهاتك المحفوظة والمنشورة تظهر هنا</div></section>
-<section class="panel" id="editProfilePanel"><header><b>تعديل الملف</b><button data-close>✕</button></header><label>اسم المستخدم</label><input id="editName" maxlength="24" placeholder="اسم المستخدم"><button id="saveProfile" class="primary">حفظ التغييرات</button></section>
-<section class="panel" id="comments"><header><b>التعليقات</b><button data-close>✕</button></header><div id="commentList" class="comment-list"></div><form id="commentForm"><input id="commentInput" maxlength="300" placeholder="أضف تعليقاً..." required><button class="primary">إرسال</button></form></section>
-<section class="panel" id="morePanel"><header><b>خيارات الفيديو</b><button data-close>✕</button></header><button id="report">⚑ الإبلاغ عن الفيديو</button><button id="block">⊘ حظر الحساب</button></section>
-<script src="./app.js" defer></script></main></body></html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808"><meta name="description" content="TAKTOK — عالم الفيديوهات واللحظات القصيرة">
+<link rel="manifest" href="./manifest.json"><link rel="stylesheet" href="./app.css">
+<title>TAKTOK | شارك لحظتك</title>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+<a class="brand" href="#" data-page="home"><span class="brand-mark">T</span><span>TAK<span>TOK</span></span></a>
+<nav class="side-nav">
+<button class="side-link active" data-page="home"><i>⌂</i>الرئيسية</button>
+<button class="side-link" data-page="friends"><i>♧</i>الأصدقاء</button>
+<button class="side-link" data-page="discover"><i>⌕</i>اكتشف</button>
+<button class="side-link" data-page="inbox"><i>✉</i>الوارد</button>
+<button class="side-link" data-page="profile"><i>♙</i>الملف الشخصي</button>
+<button class="side-link create-side" data-page="create"><i>＋</i>نشر</button>
+</nav>
+<div class="sidebar-bottom"><button class="side-link" data-page="settings"><i>⚙</i>الإعدادات</button><div class="sidebar-note">شاهد · شارك · اكتشف</div></div>
+</aside>
+<main class="main-area">
+<header class="mobile-header"><a class="brand" href="#" data-page="home"><span class="brand-mark">T</span><span>TAK<span>TOK</span></span></a><div><button class="icon-btn" data-page="discover" aria-label="بحث">⌕</button><button class="icon-btn" data-page="inbox" aria-label="الوارد">✉</button></div></header>
+<section class="page active" id="page-home">
+<div class="feed-top"><div class="feed-tabs"><button data-feed="following">أتابعه</button><span class="tab-divider"></span><button class="selected" data-feed="forYou">لك</button></div><button class="live-pill" id="liveBtn"><span></span> LIVE</button></div>
+<div class="video-feed" id="videoFeed"></div>
+</section>
+<section class="page" id="page-friends"><div class="page-heading"><div><h1>الأصدقاء</h1><p>اكتشف لحظات الأشخاص الذين تتابعهم</p></div><button class="round-btn" data-page="discover">＋</button></div><div class="story-row" id="storyRow"></div><div class="section-tabs"><button class="selected" data-friends-filter="all">الكل</button><button data-friends-filter="videos">فيديوهات</button><button data-friends-filter="photos">صور</button></div><div class="friends-grid" id="friendsGrid"></div></section>
+<section class="page" id="page-discover"><div class="page-heading"><div><h1>اكتشف</h1><p>ما الذي يلهمك اليوم؟</p></div></div><div class="search-box"><span>⌕</span><input id="globalSearch" placeholder="ابحث عن فيديوهات أو حسابات أو وسوم"><button id="clearSearch">مسح</button></div><div class="trending-tags"><span># ترند اليوم</span><button>#ضحك</button><button>#يوميات</button><button>#سفر</button><button>#مواهب</button></div><div id="discoverContent"><div class="discover-title">مقترح لك</div><div class="discover-grid" id="discoverGrid"></div></div></section>
+<section class="page" id="page-create"><div class="page-heading"><div><h1>إنشاء منشور</h1><p>شارك فيديو أو صورة مع مجتمع TAKTOK</p></div></div><div class="creator-layout"><div class="upload-card" id="dropZone"><input id="mediaInput" type="file" accept="video/*,image/*" hidden><div class="upload-symbol">↑</div><h2>اختر ملفًا من جهازك</h2><p>فيديو أو صورة — يمكنك معاينته قبل النشر</p><button class="primary-btn" id="chooseMedia">اختيار ملف</button><small>المعاينة محفوظة على هذا الجهاز لهذه الجلسة فقط</small></div><div class="publish-form"><label>الوصف</label><textarea id="postCaption" maxlength="2200" placeholder="اكتب وصفًا يعبّر عن لحظتك..."></textarea><div class="char-count"><span id="captionCount">0</span>/2200</div><label>الغلاف والصوت</label><div class="form-row"><span>الصوت الأصلي</span><span class="soft-badge">تلقائي</span></div><label class="check-row"><input type="checkbox" id="commentsAllowed" checked> السماح بالتعليقات</label><button class="primary-btn wide" id="publishBtn" disabled>نشر</button><p class="form-hint">النشر هنا تجريبي ومحلي؛ لن يظهر لمستخدمين آخرين قبل ربط الخادم.</p></div></div><div class="preview-wrap" id="previewWrap" hidden><div class="preview-head"><b>معاينة المنشور</b><button id="removeMedia">إزالة</button></div><div id="mediaPreview"></div></div></section>
+<section class="page" id="page-inbox"><div class="page-heading"><div><h1>الوارد</h1><p>رسائلك وتحديثات حسابك في مكان واحد</p></div><button class="round-btn" id="newMessage">＋</button></div><div class="inbox-tabs"><button class="selected" data-inbox-tab="messages">الرسائل</button><button data-inbox-tab="activity">النشاط</button></div><div class="inbox-list" id="inboxList"></div></section>
+<section class="page" id="page-profile"><div class="profile-cover"></div><div class="profile-main"><div class="profile-avatar" id="profileAvatar">T</div><div class="profile-actions"><button class="outline-btn" id="editProfileBtn">تعديل الملف</button><button class="round-btn">⋯</button></div><h1 id="profileName">مستخدم TAKTOK</h1><div class="profile-handle" id="profileHandle">@taktok_user</div><div class="profile-stats"><div><b id="followingCount">0</b><span>يتابع</span></div><div><b id="followersCount">0</b><span>متابع</span></div><div><b id="likesCount">0</b><span>إعجاب</span></div></div><p class="profile-bio" id="profileBio">أهلًا بك في عالمي ✨</p><div class="profile-tabs"><button class="selected" data-profile-tab="videos">▦ المنشورات</button><button data-profile-tab="liked">♡ أعجبتني</button><button data-profile-tab="saved">▣ المحفوظات</button></div><div class="profile-grid" id="profileGrid"></div></div></section>
+<section class="page" id="page-settings"><div class="page-heading"><div><h1>الإعدادات والخصوصية</h1><p>تحكم في تجربتك على TAKTOK</p></div></div><div class="settings-card"><h3>الحساب</h3><button data-page="auth">تسجيل الدخول أو إنشاء حساب <span>›</span></button><button id="settingsEdit">تعديل الملف الشخصي <span>›</span></button></div><div class="settings-card"><h3>تفضيلات المحتوى</h3><label class="setting-row">التشغيل التلقائي للفيديو <input type="checkbox" id="autoplayToggle" checked></label><label class="setting-row">الوضع الداكن <input type="checkbox" checked disabled></label></div><div class="settings-card"><h3>حول TAKTOK</h3><p>نسخة واجهة تجريبية قيد التطوير. الحسابات والرسائل والنشر العام تحتاج إلى خادم.</p><span class="soft-badge">Frontend prototype</span></div></section>
+<section class="page auth-page" id="page-auth"><div class="auth-card"><div class="auth-logo">T</div><h1 id="authTitle">مرحبًا بك في TAKTOK</h1><p>أنشئ حسابك وابدأ مشاركة لحظاتك</p><div class="auth-tabs"><button class="selected" data-auth-mode="login">تسجيل الدخول</button><button data-auth-mode="signup">إنشاء حساب</button></div><form id="authForm"><label id="authNameLabel" hidden>الاسم</label><input id="authName" placeholder="اسمك" hidden><label>البريد الإلكتروني</label><input type="email" id="authEmail" placeholder="name@example.com" required><label>كلمة المرور</label><input type="password" id="authPassword" placeholder="••••••••" minlength="6" required><button class="primary-btn wide">متابعة</button></form><button class="text-btn" id="forgotPassword">نسيت كلمة المرور؟</button><p class="form-hint">هذه واجهة تجريبية فقط؛ لم يتم تفعيل إنشاء الحسابات أو تسجيل الدخول بعد.</p></div></section>
+</main>
+<nav class="mobile-nav"><button class="active" data-page="home"><i>⌂</i><span>الرئيسية</span></button><button data-page="friends"><i>♧</i><span>الأصدقاء</span></button><button class="mobile-create" data-page="create"><i>＋</i></button><button data-page="inbox"><i>✉</i><span>الوارد</span></button><button data-page="profile"><i>♙</i><span>حسابي</span></button></nav>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal" id="modal"><button class="modal-close" id="modalClose">×</button><div id="modalContent"></div></div></div>
+<script src="./app.js" defer></script>
+</body></html>
