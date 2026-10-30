@@ -29,3 +29,5 @@ $('#report').onclick=()=>toast('تم تسجيل البلاغ محلياً — ي
 $$('.nav-btn').forEach(b=>b.addEventListener('click',()=>{$$('.nav-btn').forEach(x=>x.classList.toggle('active',x===b))}));
 render();refreshProfile();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+$('#liveBtn').onclick=()=>toast('ميزة البث المباشر ستُفعّل بعد ربط خادم البث والحسابات');
