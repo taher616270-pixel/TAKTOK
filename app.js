@@ -19,15 +19,40 @@ function openComments(p){activePost=p;const arr=store.get('comments_'+p.id,[]);$
 $('#commentForm').onsubmit=e=>{e.preventDefault();const input=$('#commentInput'),text=input.value.trim();if(!text||!activePost)return;const key='comments_'+activePost.id,arr=store.get(key,[]);arr.push({user:store.get('username','taherkld'),text});store.set(key,arr);input.value='';openComments(activePost)};
 function openMore(p){activePost=p;openPanel('morePanel')}
 $$('[data-close]').forEach(b=>b.onclick=closePanels);$('#navCreate').onclick=()=>$('#upload').click();$('#upload').onchange=e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith('video/'))return toast('اختر ملف فيديو صحيح');const url=URL.createObjectURL(f);objectUrls.push(url);posts.unshift({id:'local_'+Date.now(),user:store.get('username','taherkld'),caption:f.name,src:url,likes:0,music:'الصوت الأصلي'});store.set('posts',posts);activeTab='foryou';$$('[data-tab]').forEach(x=>x.classList.toggle('active',x.dataset.tab==='foryou'));render();$('#feed').scrollTop=0;toast('تمت إضافة الفيديو لهذه الجلسة');e.target.value=''};
-$('#navSearch').onclick=()=>openPanel('search');$('#navInbox').onclick=()=>openPanel('inbox');$('#navProfile').onclick=()=>{refreshProfile();openPanel('profile')};$('#navHome').onclick=()=>{closePanels();$('#feed').scrollTop=0};
+$('#navSearch').onclick=()=>openPanel('search');$('#navFriends').onclick=()=>{renderFriends('all');openPanel('friends')};$('#navInbox').onclick=()=>openPanel('inbox');$('#navProfile').onclick=()=>{refreshProfile();openPanel('profile')};$('#navHome').onclick=()=>{closePanels();$('#feed').scrollTop=0};
 $('#feedTabs').onclick=e=>{const b=e.target.closest('[data-tab]');if(!b)return;activeTab=b.dataset.tab;$$('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));render()};
 $('#searchInput').oninput=e=>{const q=e.target.value.trim().toLowerCase();$('#searchResults').innerHTML=q?all().filter(p=>(p.caption+' '+p.user).toLowerCase().includes(q)).map(p=>'<button class="result-row" data-result="'+p.id+'">@'+escapeHtml(p.user)+' — '+escapeHtml(p.caption)+'</button>').join(''):'<p class="muted">ابحث عن حساب أو وصف فيديو</p>'};
 $('#searchResults').onclick=e=>{const b=e.target.closest('[data-result]');if(b){closePanels();activeTab='foryou';render();const c=$('[data-id="'+b.dataset.result+'"]');c?.scrollIntoView()}};$('#saveProfile').onclick=()=>{const n=$('#editName').value.trim().replace(/^@/,'');if(n){store.set('username',n);$('#username').textContent='@'+n;toast('تم حفظ الاسم على هذا الجهاز');closePanels()}};
 function refreshProfile(){$('#username').textContent='@'+store.get('username','taherkld');$('#statFollowing').textContent=following.length;$('#statLikes').textContent=store.get('likes',[]).length;$('#statVideos').textContent=posts.length}
-$('#editProfile').onclick=()=>{openPanel('editProfile');$('#editName').value=store.get('username','taherkld')};
+$('#editProfile').onclick=()=>{openPanel('editProfilePanel');$('#editName').value=store.get('username','taherkld')};
 $('#report').onclick=()=>toast('تم تسجيل البلاغ محلياً — يلزم خادم لإرساله للإدارة');$('#block').onclick=()=>toast('الحظر الحقيقي يحتاج حساباً وخادماً');
 $$('.nav-btn').forEach(b=>b.addEventListener('click',()=>{$$('.nav-btn').forEach(x=>x.classList.toggle('active',x===b))}));
 render();refreshProfile();
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 $('#liveBtn').onclick=()=>toast('ميزة البث المباشر ستُفعّل بعد ربط خادم البث والحسابات');
+
+const friendSamples=[
+{id:'friend_v1',user:'sara_daily',kind:'video',caption:'يوم جميل مع الأصدقاء 🌿',src:'https://www.w3schools.com/html/mov_bbb.mp4'},
+{id:'friend_p1',user:'noura.photo',kind:'photo',caption:'تفاصيل صغيرة تصنع يوماً جميلاً ☀️',src:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1000&auto=format&fit=crop&q=85'},
+{id:'friend_p2',user:'yafi.moments',kind:'photo',caption:'من أجمل اللحظات التي تستحق المشاركة',src:'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1000&auto=format&fit=crop&q=85'}
+];
+let friendFilter='all';
+function renderFriends(filter='all'){
+ friendFilter=filter;
+ $$('#friends [data-friend-tab]').forEach(b=>b.classList.toggle('active',b.dataset.friendTab===filter));
+ const box=$('#friendsFeed');box.innerHTML='';
+ const data=[...posts.filter(p=>p.kind==='photo'||p.kind==='video').map(p=>({...p,user:p.user||'taherkld'})),...friendSamples];
+ const filtered=data.filter(p=>filter==='all'||p.kind===filter);
+ if(!filtered.length){box.innerHTML='<div class="empty-friends">لا توجد منشورات هنا بعد<br>عندما ينشر أصدقاؤك صوراً أو فيديوهات ستظهر هنا</div>';return}
+ filtered.forEach(p=>{
+  const node=document.createElement('article');node.className='friend-post';
+  const media=p.kind==='video'?'<video class="friend-post-media" src="'+p.src+'" controls playsinline></video>':'<img class="friend-post-media" src="'+p.src+'" alt="منشور صديق">';
+  node.innerHTML='<div class="friend-post-head"><img src="https://i.pravatar.cc/100?u='+encodeURIComponent(p.user)+'"><div><b>@'+escapeHtml(p.user)+'</b><small>منشور صديق</small></div></div>'+media+'<p class="friend-post-caption">'+escapeHtml(p.caption)+'</p><div class="friend-post-actions"><button data-faction="like">♡ إعجاب</button><button data-faction="comment">▢ تعليق</button><button data-faction="share">➤ مشاركة</button></div>';
+  node.querySelector('[data-faction="like"]').onclick=e=>{e.currentTarget.classList.toggle('active');e.currentTarget.textContent=e.currentTarget.classList.contains('active')?'♥ أعجبني':'♡ إعجاب'};
+  node.querySelector('[data-faction="comment"]').onclick=()=>openComments(p);
+  node.querySelector('[data-faction="share"]').onclick=()=>share(p);
+  box.append(node);
+ });
+}
+$('#friends').addEventListener('click',e=>{const b=e.target.closest('[data-friend-tab]');if(b)renderFriends(b.dataset.friendTab)});
