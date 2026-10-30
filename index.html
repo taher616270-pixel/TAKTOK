@@ -1,93 +1,78 @@
-<!doctype html><html lang="ar" dir="rtl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>TAKTOK - تاك توك</title>
-<link rel="manifest" href="manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#000000">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3046/3046120.png">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@800;700&display=swap" rel="stylesheet">
-<style>
-*{font-family:Tajawal}body{overscroll-behavior:none}
-#splash{transition:.8s}.snap{scroll-snap-type:y mandatory;overflow-y:scroll;height:100dvh}.snap-item{scroll-snap-align:start;height:100dvh}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
-</style>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TAKTOK</title>
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./components/bottom-bar.css">
 </head>
-<body class="bg-black text-white select-none">
+<body>
 
-<!-- شاشة افتتاحية فخمة -->
-<div id="splash" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
-<div class="text-[48px] font-black tracking-[6px] animate-[pulse_1.5s_infinite]">TAK<span class="text-[#C8A97E]">TOK</span></div>
-<div class="w-20 h-[3px] bg-white mt-4 rounded-full overflow-hidden"><div class="h-full bg-[#C8A97E] animate-[load_2s_linear]" style="width:0%"></div></div>
-<p class="mt-4 text-[11px] tracking-[4px] text-zinc-500">تاك توك - عالمك</p>
-</div>
-<style>@keyframes load{to{width:100%}}</style>
-
-<header class="fixed top-0 w-full z-40 flex justify-between p-4 pt-12 bg-gradient-to-b from-black via-black/50 to-transparent">
-<div class="flex gap-4 text-[14px]"><b class="border-b-2 border-white pb-1">لك</b><span class="text-zinc-400">متابَع</span><span class="text-zinc-400">استكشاف</span></div>
-<label class="bg-white text-black px-4 py-1 rounded-full text-xs font-bold cursor-pointer">+ رفع
-<input type="file" accept="video/*" hidden id="up">
-</label>
+<header class="top-bar">
+  <div class="top-search-row">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.3-4.3"/></svg>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span>الدمام</span>
+      <span>📍</span>
+    </div>
+  </div>
+  <div class="tabs-row" id="tabs">
+    <span class="tab" data-view="dammam">الدمام</span>
+    <span class="tab" data-view="community">المجتمع</span>
+    <span class="tab" data-view="following">اتابعه</span>
+    <span class="tab active" data-view="foryou">لك</span>
+  </div>
 </header>
 
-<div id="feed" class="snap"></div>
+<main class="main-feed" id="mainFeed">
+  <section class="video-page">
+    <div class="video-center">💔💔 حسمي الله عليك التطبيق<br><br>كم باقي على 2027</div>
+    <div class="side-actions">
+      <div class="action"><div class="icon-circle">❤️</div><span>199</span></div>
+      <div class="action"><div class="icon-circle">💬</div><span>34</span></div>
+      <div class="action"><div class="icon-circle">🔖</div><span>30</span></div>
+      <div class="action"><div class="icon-circle">↗️</div></div>
+      <div class="action"><div class="icon-circle" style="border:2px solid #fff"><img src="https://i.pravatar.cc/100?img=5" style="width:100%;height:100%;border-radius:50%"></div></div>
+    </div>
+    <div class="video-info"><b>يا رب صبرني انا تعبت 💔</b><br>الصوت الأصلي - wafaf_gh</div>
+  </section>
+</main>
 
-<nav class="fixed bottom-0 w-full z-40 bg-black/90 backdrop-blur border-t border-zinc-800 flex justify-around py-2 pb-6 text-[10px]">
-<div class="text-center"><div class="text-[18px]">🏠</div>الرئيسية</div>
-<div class="text-center text-zinc-500"><div class="text-[18px]">🔍</div>اكتشف</div>
-<div class="w-10 h-10 bg-white text-black rounded-lg flex items-center justify-center text-[22px] font-black">+</div>
-<div class="text-center text-zinc-500"><div class="text-[18px]">📥</div>الوارد</div>
-<div class="text-center text-zinc-500"><div class="text-[18px]">👤</div>أنا</div>
-</nav>
+<section class="grid-view" id="gridView">
+  <div class="grid-item"><img src="https://picsum.photos/400/600?1"><span class="grid-meta">1092 ❤️</span></div>
+  <div class="grid-item"><img src="https://picsum.photos/400/600?2"><span class="grid-meta">784 ❤️</span></div>
+  <div class="grid-item"><img src="https://picsum.photos/400/600?3"><span class="grid-meta">233 ❤️</span></div>
+  <div class="grid-item"><img src="https://picsum.photos/400/600?4"><span class="grid-meta">871 ❤️</span></div>
+</section>
 
-<div id="installBox" class="hidden fixed bottom-24 left-4 right-4 bg-zinc-900 border border-zinc-700 p-3 rounded-2xl z-50 flex justify-between items-center">
-<div><b class="text-sm">ثبت TAKTOK 📲</b><p class="text-[11px] text-zinc-400">يثبت كتطبيق في الايفون والاندرويد</p></div>
-<button onclick="installApp()" class="bg-white text-black px-4 py-2 rounded-full text-xs font-bold">تثبيت</button>
+<div class="region-modal" id="regionModal">
+  <div class="region-header"><span id="closeRegion">✕</span><span>تغيير المنطقة</span><span></span></div>
+  <div style="padding:12px">
+    <input style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd" placeholder="البحث عن مناطق في المملكة">
+    <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">
+      <button class="city">الدمام</button><button class="city">جدة</button><button class="city">الرياض</button><button class="city">مكة المكرمة</button><button class="city">المدينة المنورة</button><button class="city">تبوك</button>
+    </div>
+  </div>
 </div>
 
-<script>
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;installBox.classList.remove('hidden')})
-function installApp(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>installBox.classList.add('hidden'))}}
+<div id="bottomNavContainer"></div>
 
-let videos=JSON.parse(localStorage.getItem('taktok_vids')||'[]');
-if(videos.length===0){videos=[
-{url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",user:"taher",caption:"أول فيديو في TAKTOK 🔥 #تاك_توك #السعودية",likes:1240,comments:89},
-{url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",user:"abumohammed",caption:"غرف نوم فاخرة - الدمام 😍 #اثاث",likes:5430,comments:210},
-{url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",user:"design",caption:"تصميم داخلي مودرن ✨ #ديكور",likes:890,comments:34}
-]}
+<script type="module">
+import { renderBottomNav } from './components/bottom-bar.js';
+document.getElementById('bottomNavContainer').appendChild(renderBottomNav('home'));
 
-const feed=document.getElementById('feed');
-function render(){
-feed.innerHTML=videos.map((v,i)=>`
-<div class="snap-item relative w-full flex items-center justify-center bg-zinc-950">
-<video src="${v.url}" loop playsinline class="w-full h-full object-cover" onclick="this.paused?this.play():this.pause()"></video>
-<div class="absolute bottom-28 left-4 right-20">
-<p class="font-black text-[15px]">@${v.user}</p>
-<p class="text-[13px] mt-1 leading-6">${v.caption}</p>
-<p class="text-[11px] mt-2 opacity-60">🎵 الصوت الأصلي - ${v.user}</p>
-</div>
-<div class="absolute right-2 bottom-28 flex flex-col gap-4 items-center">
-<button onclick="like(${i})" class="flex flex-col items-center"><div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-[22px]">❤️</div><span class="text-[11px] mt-1">${v.likes}</span></button>
-<button onclick="comment(${i})" class="w-12 h-12 bg-white/20 backdrop-blur rounded-full text-[20px]">💬<span class="block text-[10px]">${v.comments}</span></button>
-<button class="w-12 h-12 bg-white/20 backdrop-blur rounded-full text-[18px]">↗️</button>
-<div class="w-10 h-10 rounded-full bg-[#C8A97E] border-2 border-white mt-2"></div>
-</div>
-</div>`).join('');
-localStorage.setItem('taktok_vids',JSON.stringify(videos));
-document.querySelectorAll('video').forEach(v=>{v.play().catch(()=>{})})
+const tabs=document.getElementById('tabs'), main=document.getElementById('mainFeed'), grid=document.getElementById('gridView');
+tabs.onclick=e=>{
+  if(!e.target.classList.contains('tab'))return;
+  tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  let v=e.target.dataset.view;
+  if(v==='dammam') document.getElementById('regionModal').classList.add('active');
+  else if(v==='community'){ main.style.display='none'; grid.classList.add('active'); }
+  else{ main.style.display='block'; grid.classList.remove('active'); }
 }
-function like(i){videos[i].likes++; render()}
-function comment(i){let t=prompt('اكتب تعليق:'); if(t){videos[i].comments++; render()}}
-document.getElementById('up').onchange=e=>{
-const f=e.target.files[0]; if(!f) return;
-const url=URL.createObjectURL(f);
-videos.unshift({url,user:"taher616270-pixel",caption:"فيديو جديد في TAKTOK 🔥",likes:0,comments:0});
-render(); feed.scrollTop=0;
-}
-render();
-setTimeout(()=>{splash.style.opacity=0; setTimeout(()=>splash.remove(),800)},2500);
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}
+document.getElementById('closeRegion').onclick=()=>document.getElementById('regionModal').classList.remove('active');
 </script>
-</body></html>
+</body>
+</html>
