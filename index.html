@@ -4,75 +4,113 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TAKTOK</title>
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./components/bottom-bar.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden;direction:rtl}
+.top{position:fixed;top:0;left:0;right:0;height:90px;background:#000;z-index:10;padding:10px 12px;border-bottom:1px solid #111}
+.top1{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.tabs{display:flex;gap:16px;overflow-x:auto;margin-top:10px;white-space:nowrap}
+.tab{color:#888;font-size:15px;padding-bottom:4px}
+.tab.active{color:#fff;border-bottom:2px solid #fff;font-weight:700}
+.feed{position:absolute;top:90px;bottom:70px;left:0;right:0;overflow-y:scroll;scroll-snap-type:y mandatory;background:#000}
+.page{width:100%;height:100%;scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center;justify-content:center}
+.page img{width:100%;height:100%;object-fit:cover}
+.center-text{font-size:18px;text-align:center;line-height:1.8}
+.side{position:absolute;right:8px;bottom:20px;display:flex;flex-direction:column;gap:14px;z-index:5}
+.s-item{display:flex;flex-direction:column;align-items:center;font-size:12px;gap:2px}
+.s-icon{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px}
+.info{position:absolute;bottom:10px;left:10px;right:70px;font-size:13px;line-height:1.4}
+.grid{display:none;position:absolute;top:90px;bottom:70px;left:0;right:0;background:#000;padding:2px;grid-template-columns:1fr 1fr;gap:2px;overflow:auto}
+.grid.active{display:grid}
+.g-item{position:relative;aspect-ratio:3/4;background:#111}
+.g-item img{width:100%;height:100%;object-fit:cover}
+.region{position:fixed;inset:0;background:#fff;color:#000;z-index:100;display:none;flex-direction:column}
+.region.active{display:flex}
+.r-head{height:56px;display:flex;justify-content:space-between;align-items:center;padding:0 16px;border-bottom:1px solid #eee;font-weight:700}
+
+/* الشريط السفلي - هذا هو الملف الثابت */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:70px;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;align-items:center;z-index:999}
+.b-item{flex:1;display:flex;flex-direction:column;align-items:center;color:#777;font-size:10px;gap:3px;background:none;border:none}
+.b-item.active{color:#fff}
+.b-item svg{width:26px;height:26px}
+.plus{width:48px;height:32px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#000;font-size:24px;font-weight:900;box-shadow:-4px 0 #ff2d55,4px 0 #25f4ee}
+.badge{position:absolute;top:-4px;right:12px;background:#ff2d55;color:#fff;font-size:10px;padding:1px 6px;border-radius:10px}
+</style>
 </head>
 <body>
 
-<header class="top-bar">
-  <div class="top-search-row">
-    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.3-4.3"/></svg>
-    <div style="display:flex;gap:10px;align-items:center">
-      <span>الدمام</span>
-      <span>📍</span>
-    </div>
+<div class="top">
+  <div class="top1">
+    <span>🔍</span>
+    <div>📍 الدمام</div>
   </div>
-  <div class="tabs-row" id="tabs">
-    <span class="tab" data-view="dammam">الدمام</span>
-    <span class="tab" data-view="community">المجتمع</span>
-    <span class="tab" data-view="following">اتابعه</span>
-    <span class="tab active" data-view="foryou">لك</span>
+  <div class="tabs" id="tabs">
+    <div class="tab" data-v="region">الدمام</div>
+    <div class="tab" data-v="comm">المجتمع</div>
+    <div class="tab" data-v="follow">اتابعه</div>
+    <div class="tab active" data-v="foryou">لك</div>
   </div>
-</header>
+</div>
 
-<main class="main-feed" id="mainFeed">
-  <section class="video-page">
-    <div class="video-center">💔💔 حسمي الله عليك التطبيق<br><br>كم باقي على 2027</div>
-    <div class="side-actions">
-      <div class="action"><div class="icon-circle">❤️</div><span>199</span></div>
-      <div class="action"><div class="icon-circle">💬</div><span>34</span></div>
-      <div class="action"><div class="icon-circle">🔖</div><span>30</span></div>
-      <div class="action"><div class="icon-circle">↗️</div></div>
-      <div class="action"><div class="icon-circle" style="border:2px solid #fff"><img src="https://i.pravatar.cc/100?img=5" style="width:100%;height:100%;border-radius:50%"></div></div>
+<div class="feed" id="feed">
+  <div class="page" style="background:#000">
+    <div class="center-text">💔💔 حسمي الله عليك التطبيق<br><br><span style="color:#aaa;font-size:14px">كم باقي على 2027</span></div>
+    <div class="side">
+      <div class="s-item"><div class="s-icon">❤️</div><span>199</span></div>
+      <div class="s-item"><div class="s-icon">💬</div><span>34</span></div>
+      <div class="s-item"><div class="s-icon">🔖</div><span>30</span></div>
+      <div class="s-item"><div class="s-icon">↗️</div></div>
+      <div class="s-item"><div class="s-icon" style="padding:2px"><img src="https://i.pravatar.cc/100?img=5" style="width:100%;height:100%;border-radius:50%"></div></div>
     </div>
-    <div class="video-info"><b>يا رب صبرني انا تعبت 💔</b><br>الصوت الأصلي - wafaf_gh</div>
-  </section>
-</main>
+    <div class="info"><b>يا رب صبرني انا تعبت 💔</b><br>الصوت الأصلي - wafaf_gh</div>
+  </div>
+  <div class="page"><img src="https://picsum.photos/seed/a1/720/1280"><div class="info">عاجل - اخبار</div></div>
+  <div class="page"><img src="https://picsum.photos/seed/a2/720/1280"><div class="info">الدمام كورنيش 🌙</div></div>
+</div>
 
-<section class="grid-view" id="gridView">
-  <div class="grid-item"><img src="https://picsum.photos/400/600?1"><span class="grid-meta">1092 ❤️</span></div>
-  <div class="grid-item"><img src="https://picsum.photos/400/600?2"><span class="grid-meta">784 ❤️</span></div>
-  <div class="grid-item"><img src="https://picsum.photos/400/600?3"><span class="grid-meta">233 ❤️</span></div>
-  <div class="grid-item"><img src="https://picsum.photos/400/600?4"><span class="grid-meta">871 ❤️</span></div>
-</section>
+<div class="grid" id="grid">
+  <div class="g-item"><img src="https://picsum.photos/400/600?1"></div>
+  <div class="g-item"><img src="https://picsum.photos/400/600?2"></div>
+  <div class="g-item"><img src="https://picsum.photos/400/600?3"></div>
+  <div class="g-item"><img src="https://picsum.photos/400/600?4"></div>
+  <div class="g-item"><img src="https://picsum.photos/400/600?5"></div>
+  <div class="g-item"><img src="https://picsum.photos/400/600?6"></div>
+</div>
 
-<div class="region-modal" id="regionModal">
-  <div class="region-header"><span id="closeRegion">✕</span><span>تغيير المنطقة</span><span></span></div>
+<div class="region" id="region">
+  <div class="r-head"><span id="closeR">✕</span><span>تغيير المنطقة</span><span></span></div>
   <div style="padding:12px">
-    <input style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd" placeholder="البحث عن مناطق في المملكة">
-    <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">
-      <button class="city">الدمام</button><button class="city">جدة</button><button class="city">الرياض</button><button class="city">مكة المكرمة</button><button class="city">المدينة المنورة</button><button class="city">تبوك</button>
+    <input style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd" placeholder="البحث عن مناطق">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px">
+      <button style="padding:6px 12px;border-radius:20px;border:1px solid #ddd">الدمام</button>
+      <button style="padding:6px 12px;border-radius:20px;border:1px solid #ddd">جدة</button>
+      <button style="padding:6px 12px;border-radius:20px;border:1px solid #ddd">الرياض</button>
+      <button style="padding:6px 12px;border-radius:20px;border:1px solid #ddd">مكة</button>
+      <button style="padding:6px 12px;border-radius:20px;border:1px solid #ddd">المدينة</button>
     </div>
   </div>
 </div>
 
-<div id="bottomNavContainer"></div>
+<!-- الشريط السفلي ثابت في ملف لحاله - هنا نسخته -->
+<nav class="bottom-nav">
+  <button class="b-item"><div style="position:relative"><span style="font-size:24px">🛍️</span><span class="badge">27</span></div><span>الشخصي</span></button>
+  <button class="b-item"><span style="font-size:24px">🏪</span><span>متجر القرب</span></button>
+  <button class="b-item"><div class="plus">+</div></button>
+  <button class="b-item"><span style="font-size:24px">📡</span><span>البثه</span></button>
+  <button class="b-item active"><span style="font-size:24px">🏠</span><span>الرئيسية</span></button>
+</nav>
 
-<script type="module">
-import { renderBottomNav } from './components/bottom-bar.js';
-document.getElementById('bottomNavContainer').appendChild(renderBottomNav('home'));
-
-const tabs=document.getElementById('tabs'), main=document.getElementById('mainFeed'), grid=document.getElementById('gridView');
+<script>
+const tabs=document.getElementById('tabs'), feed=document.getElementById('feed'), grid=document.getElementById('grid'), region=document.getElementById('region');
 tabs.onclick=e=>{
-  if(!e.target.classList.contains('tab'))return;
-  tabs.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  e.target.classList.add('active');
-  let v=e.target.dataset.view;
-  if(v==='dammam') document.getElementById('regionModal').classList.add('active');
-  else if(v==='community'){ main.style.display='none'; grid.classList.add('active'); }
-  else{ main.style.display='block'; grid.classList.remove('active'); }
+  let t=e.target; if(!t.classList.contains('tab')) return;
+  tabs.querySelectorAll('.tab').forEach(x=>x.classList.remove('active')); t.classList.add('active');
+  let v=t.dataset.v;
+  if(v==='region'){region.classList.add('active')}
+  else if(v==='comm'){feed.style.display='none';grid.classList.add('active')}
+  else{feed.style.display='block';grid.classList.remove('active')}
 }
-document.getElementById('closeRegion').onclick=()=>document.getElementById('regionModal').classList.remove('active');
+document.getElementById('closeR').onclick=()=>region.classList.remove('active');
 </script>
 </body>
 </html>
